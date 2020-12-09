@@ -7,9 +7,9 @@ import (
 
 func main() {
 
-	bucket1:= getUserData("please enter the size of the first bucket:")
-	bucket2:= getUserData("please enter the size of the second bucket:")
-	waterGalleons:= getUserData("please enter the galleons of water that you need:")
+	bucket1:= getUserInput("please enter the size of the first bucket:")
+	bucket2:= getUserInput("please enter the size of the second bucket:")
+	waterGalleons:= getUserInput("please enter the galleons of water that you need:")
 
 	if bucket2 > bucket1 {
 		temp:= bucket2
@@ -46,17 +46,17 @@ func validateInput(number int) bool{
 }
 
 
-func getUserData(message string) int{
-	var s string
-	var i int
+func getUserInput(message string) int{
+	var stringTemp string
+	var inputNumber int
 	fmt.Println(message)
 	for {
-		_, err := fmt.Scan(&s)
-		i, err = strconv.Atoi(s)
-		if err != nil || validateInput(i) {
+		_, err := fmt.Scan(&stringTemp)
+		inputNumber, err = strconv.Atoi(stringTemp)
+		if err != nil || validateInput(inputNumber) {
 			fmt.Println("Enter a valid number greater than 0")
 		} else {
-			return i
+			return inputNumber
 		}
 	}
 }
@@ -79,7 +79,9 @@ func pourWater(bucket1 int, bucket2 int, destination int) {
 	from := bucket1
 	to:= 0
 
-	fmt.Println("Filled bucket 1")
+	fmt.Printf("filled %v galleon bucket\n\n", bucket1)
+
+	showCurrentStatus(bucket1,bucket2,from,to)
 
 	for from!= destination && to != destination {
 
@@ -88,20 +90,26 @@ func pourWater(bucket1 int, bucket2 int, destination int) {
 		to += temp
 		from -=temp
 
-		fmt.Println("Poured first bucket into second bucket")
+		fmt.Printf("Poured from %v galleon bucket to %v galleon bucket\n\n", bucket1, bucket2)
+		showCurrentStatus(bucket1,bucket2,from,to)
 
-		if bucket1 == destination || to == destination {
+
+		if from == destination || to == destination {
 			break
 		}
 
 		if from == 0{
 			from = bucket1
-			fmt.Println("Filled bucket 1 again")
+			fmt.Printf("Filled %v galleon bucket\n\n", bucket1)
+			showCurrentStatus(bucket1,bucket2,from,to)
+
+
 		}
 
 		if to == bucket2 {
 			to = 0
-			fmt.Println("Emptied second bucket")
+			fmt.Printf("Emptied %v galleon bucket\n\n", bucket2)
+			showCurrentStatus(bucket1,bucket2,from,to)
 		}
 
 	}
@@ -109,4 +117,10 @@ func pourWater(bucket1 int, bucket2 int, destination int) {
 	fmt.Printf("Got the %v of galleons required", destination)
 
 
+}
+
+func showCurrentStatus (bucket1,bucket2,from,to int){
+	fmt.Printf("Current status is : \n" )
+	fmt.Printf("bucket of %v galleon has %v \n",bucket1, from )
+	fmt.Printf("bucket of %v galleon has %v galleons \n\n", bucket2, to )
 }
