@@ -11,6 +11,10 @@ func main() {
 	bucket2:= getUserInput("please enter the size of the second bucket:")
 	waterGalleons:= getUserInput("please enter the galleons of water that you need:")
 
+	solveWaterJugRiddle(bucket1,bucket2,waterGalleons)
+}
+
+func solveWaterJugRiddle(bucket1,bucket2,waterGalleons int){
 	if bucket2 > bucket1 {
 		temp:= bucket2
 		bucket2 = bucket1
@@ -21,16 +25,13 @@ func main() {
 		fmt.Println("No Solution")
 		return
 	}
-	fmt.Println(getGreaterCommonDenominator(bucket1,bucket2))
 	if waterGalleons % getGreaterCommonDenominator(bucket1,bucket2) != 0{
 		fmt.Println("No Solution")
 		return
 	}
-
 	pourWater(bucket1,bucket2,waterGalleons)
+
 }
-
-
 
 
 func getGreaterCommonDenominator (bucket1 int, bucket2 int)int{
@@ -76,6 +77,17 @@ func MinOf(vars ...int) int {
 
 func pourWater(bucket1 int, bucket2 int, destination int) {
 
+	fmt.Println()
+	fmt.Println()
+
+	if bucket2 == destination{
+
+		fmt.Printf("fill %v galleon bucket\n\n", bucket2)
+		showCurrentStatus(bucket1,bucket2,0,destination)
+		return
+	}
+
+
 	from := bucket1
 	to:= 0
 
@@ -93,7 +105,6 @@ func pourWater(bucket1 int, bucket2 int, destination int) {
 		fmt.Printf("Poured from %v galleon bucket to %v galleon bucket\n\n", bucket1, bucket2)
 		showCurrentStatus(bucket1,bucket2,from,to)
 
-
 		if from == destination || to == destination {
 			break
 		}
@@ -102,8 +113,6 @@ func pourWater(bucket1 int, bucket2 int, destination int) {
 			from = bucket1
 			fmt.Printf("Filled %v galleon bucket\n\n", bucket1)
 			showCurrentStatus(bucket1,bucket2,from,to)
-
-
 		}
 
 		if to == bucket2 {
