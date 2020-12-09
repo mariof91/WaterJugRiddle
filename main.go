@@ -13,17 +13,17 @@ func main() {
 
 	if bucket2 > bucket1 {
 		temp:= bucket2
-		bucket1 = bucket2
-		bucket2 = temp
+		bucket2 = bucket1
+		bucket1 = temp
 	}
 
 	if waterGalleons > bucket1 {
-		fmt.Println("Solution not posible")
+		fmt.Println("No Solution")
 		return
 	}
-
+	fmt.Println(getGreaterCommonDenominator(bucket1,bucket2))
 	if waterGalleons % getGreaterCommonDenominator(bucket1,bucket2) != 0{
-		fmt.Println("Solution not posible")
+		fmt.Println("No Solution")
 		return
 	}
 
@@ -37,7 +37,7 @@ func getGreaterCommonDenominator (bucket1 int, bucket2 int)int{
 	if bucket2 == 0{
 		return bucket1
 	}
-	return getGreaterCommonDenominator(bucket2, bucket1%bucket2)
+	return getGreaterCommonDenominator(bucket2, bucket1 % bucket2)
 }
 
 
